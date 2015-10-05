@@ -413,6 +413,49 @@
 
 \begin{frame}{Branch and Bound}
 
+    \begin{center}\begin{tikzpicture}
+        \newcount \c
+        \foreach \n in {1, ..., 8}{
+            \c=\n \advance\c by -1 \multiply\c by -360 \divide\c by 8 \advance\c by 112.5
+            \ifthenelse{\n = 1 \OR \n = 4 \OR \n = 8}{
+                \node[draw, circle, fill=uofgcobalt, inner sep=4pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
+            }{}
+            \ifthenelse{\n = 2 \OR \n = 5 \OR \n = 6}{
+                \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
+            }{}
+            \ifthenelse{\n = 3}{
+                \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
+            }{}
+            \ifthenelse{\n = 7}{
+                \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
+            }{}
+        }
+
+        \draw [thick, color=uofgsandstone!50] (N1) -- (N2);
+        \draw [thick, color=uofgsandstone!50] (N1) -- (N5);
+        \draw [thick, color=uofgsandstone!50] (N2) -- (N3);
+        \draw [thick, color=uofgsandstone!50] (N2) -- (N8);
+        \draw [thick, color=uofgsandstone!50] (N3) -- (N4);
+        \draw [thick, color=uofgsandstone!50] (N3) -- (N5);
+        \draw [thick, color=uofgsandstone!50] (N3) -- (N8);
+        \draw [thick, color=uofgsandstone!50] (N4) -- (N5);
+        \draw [thick, color=uofgsandstone!50] (N4) -- (N6);
+        \draw [thick, color=uofgsandstone!50] (N5) -- (N8);
+        \draw [thick, color=uofgsandstone!50] (N7) -- (N8);
+
+        \draw [ultra thick] (N1) -- (N3);
+        \draw [ultra thick] (N1) -- (N6);
+        \draw [ultra thick] (N1) -- (N7);
+        \draw [ultra thick] (N3) -- (N6);
+        \draw [ultra thick] (N3) -- (N7);
+        \draw [ultra thick] (N6) -- (N7);
+    \end{tikzpicture}\end{center}
+
+    \begin{itemize}
+        \item For optimisation: keep track of the best solution we've found so far. If we can show
+            we can't beat it, backtrack immediately.
+    \end{itemize}
+
 \end{frame}
 
 \begin{frame}{Backjumping}
@@ -437,6 +480,21 @@
 
 \end{frame}
 
+\begin{frame}{Safety and Reproducibility}
+
+    \begin{itemize}
+        \item My ``wish list'':
+            \begin{enumerate}
+                \item Parallel search should not be substantially slower than sequential search.
+                \item Adding more processors should not make things substantially worse.
+                \item Running the same program twice on the same hardware should give similar
+                    runtimes.
+            \end{enumerate}
+        \item This is surprisingly tricky and controversial.
+    \end{itemize}
+
+\end{frame}
+
 \begin{frame}{Parallel Backjumping}
 
 \end{frame}
@@ -449,6 +507,12 @@
 
 \begin{frame}{Symmetries}
 
+    \begin{itemize}
+        \item Sometimes graphs have known symmetries. Can we exploit this?
+
+        \item What about if we have to detect the symmetries ourselves dynamically?
+    \end{itemize}
+
 \end{frame}
 
 \begin{frame}{Explaining Failures}
@@ -456,6 +520,13 @@
 \end{frame}
 
 \begin{frame}{Describing and Implementing Parallel Search}
+
+    \begin{itemize}
+        \item Implementing safe and reproducible parallel search by hand, even just for multi-core,
+            is painful.
+        \item Current high level approaches don't offer the properties we need.
+        \item Is there a better way?
+    \end{itemize}
 
 \end{frame}
 
