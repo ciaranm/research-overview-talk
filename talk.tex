@@ -480,6 +480,10 @@
 
 \end{frame}
 
+\begin{frame}{Parallel Backjumping}
+
+\end{frame}
+
 \begin{frame}{Safety and Reproducibility}
 
     \begin{itemize}
@@ -495,29 +499,7 @@
 
 \end{frame}
 
-\begin{frame}{Parallel Backjumping}
-
-\end{frame}
-
 \section{Works in Progress}
-
-\begin{frame}{Random Subgraph Isomorphism}
-
-\end{frame}
-
-\begin{frame}{Symmetries}
-
-    \begin{itemize}
-        \item Sometimes graphs have known symmetries. Can we exploit this?
-
-        \item What about if we have to detect the symmetries ourselves dynamically?
-    \end{itemize}
-
-\end{frame}
-
-\begin{frame}{Explaining Failures}
-
-\end{frame}
 
 \begin{frame}{Describing and Implementing Parallel Search}
 
@@ -527,6 +509,48 @@
         \item Current high level approaches don't offer the properties we need.
         \item Is there a better way?
     \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Symmetries}
+
+    \begin{itemize}
+        \item Some graphs have known symmetries. Can we exploit this?
+
+            \begin{itemize}
+                \item In some ways, maximum clique is just a completely symmetric version of maximum
+                    common subgraph.
+            \end{itemize}
+
+        \item What about if we have to detect the symmetries ourselves dynamically?
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Explaining Failures}
+
+    \begin{itemize}
+        \item Backjumping works because when we fail, we work out why, and use that to backtrack
+            further.
+
+        \item But then we throw that information away\ldots
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Hard Subgraph Isomorphism Instances}
+
+    \only<1> {
+        \begin{itemize}
+            \item We like having lots of instances, to make sure we don't overfit algorithm parameters.
+
+            \item How do we randomly create subgraph isomorphism instances?
+        \end{itemize}
+    }
+
+    \only<2> {
+
+    }
 
 \end{frame}
 
