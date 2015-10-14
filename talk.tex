@@ -45,14 +45,14 @@
 \tikzset{vertex/.style={draw, circle, inner sep=0pt, minimum size=0.5cm, font=\small\bfseries}}
 \tikzset{notvertex/.style={vertex, color=white, text=black}}
 \tikzset{plainvertex/.style={vertex}}
-\tikzset{vertexc1/.style={vertex, fill=uofgburgundy, text=white}}
-\tikzset{vertexc2/.style={vertex, fill=uofgsandstone, text=white}}
-\tikzset{vertexc3/.style={vertex, fill=uofgforest, text=white}}
-\tikzset{vertexc4/.style={vertex, fill=uofgheather, text=white}}
+\tikzset{vertexc1/.style={vertex, fill=uofgcobalt}}
+\tikzset{vertexc2/.style={vertex, fill=uofglawn}}
+\tikzset{vertexc3/.style={vertex, fill=uofgsunshine}}
+\tikzset{vertexc4/.style={vertex, fill=uofgheather}}
 \tikzset{edge/.style={color=black!50!white}}
 \tikzset{bedge/.style={ultra thick}}
 \tikzset{edged/.style={color=screengrey, dashed}}
-\tikzset{edgel3/.style={color=uofgrose, ultra thick}}
+\tikzset{edgel3/.style={color=uofgthistle, ultra thick}}
 
 % {{{ theme things
 \useoutertheme[footline=authortitle]{miniframes}
@@ -183,9 +183,9 @@
 \begin{frame}{Subgraph Isomorphism}
     \begin{center}\begin{tikzpicture}
         \node[draw, circle, fill=uofgcobalt, inner sep=4pt, font=\bfseries] (Na) at (1,  0) {1};
-        \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (Nb) at (1, -2) {2};
-        \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (Nc) at (0, -4) {3};
-        \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (Nd) at (2, -4) {4};
+        \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (Nb) at (1, -1.5) {2};
+        \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (Nc) at (0, -3) {3};
+        \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (Nd) at (2, -3) {4};
 
         \draw [ultra thick] (Na) -- (Nb);
         \draw [ultra thick] (Nb) -- (Nc);
@@ -194,10 +194,10 @@
 
         \node[draw, circle, fill=uofgcobalt, inner sep=4pt, font=\bfseries] (N1) at (5.5,  0) {1};
         \node[draw, circle, fill=white, inner sep=4pt, font=\bfseries] (N2) at (7.5,  0) {2};
-        \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (N3) at (5.5, -2) {3};
-        \node[draw, circle, fill=white, inner sep=4pt, font=\bfseries] (N4) at (7.5, -2) {4};
-        \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (N5) at (5.5, -4) {5};
-        \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (N6) at (7.5, -4) {6};
+        \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (N3) at (5.5, -1.5) {3};
+        \node[draw, circle, fill=white, inner sep=4pt, font=\bfseries] (N4) at (7.5, -1.5) {4};
+        \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (N5) at (5.5, -3) {5};
+        \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (N6) at (7.5, -3) {6};
 
         \draw [thick, color=uofgsandstone!50] (N1) -- (N2);
         \draw [ultra thick] (N1) -- (N3);
@@ -347,6 +347,129 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{Implied Constraints for Subgraph Isomorphism}
+    \only<1> {
+        \begin{itemize}
+            \item Adjacent vertices must be mapped to adjacent vertices.
+            \item Vertices that are distance 2 apart must be mapped to vertices that are within
+                distance 2.
+            \item Vertices that are distance $k$ apart must be mapped to vertices that are within
+                distance $k$.
+        \end{itemize}
+
+        \vspace{1em}
+
+        \centering
+        \begin{tikzpicture}
+            \node [vertex] (Pc) at (0, 0) { c };
+            \node [vertexc3] (Pd) at (1, 0) { d };
+            \node [vertex] (Pb) at (1, 1) { b };
+            \node [vertexc1] (Pa) at (0, 1) { a };
+
+            \draw [edge] (Pa) -- (Pb);
+            \draw [edge] (Pb) -- (Pc);
+            \draw [edge] (Pc) -- (Pd);
+            \draw [edge] (Pd) -- (Pb);
+            \draw [edge] (Pa) -- (Pc);
+
+            \node [anchor=center, font=\huge] at (2.565, 0.5) { $\centernot\rightarrowtail$ };
+
+            \node [vertexc1] (T1) at (4.13, 0.5) { 1 };
+            \node [vertex] (T5) at (5, 0) { 5 };
+            \node [vertex] (T6) at (6, 0) { 6 };
+            \node [vertex] (T3) at (6, 1) { 3 };
+            \node [vertex] (T2) at (5, 1) { 2 };
+            \node [vertexc3] (T4) at (6.87, 0.5) { 4 };
+
+            \draw [edge] (T1) -- (T2);
+            \draw [edge] (T1) -- (T5);
+            \draw [edge] (T4) -- (T3);
+            \draw [edge] (T4) -- (T6);
+            \draw [edge] (T2) -- (T6);
+            \draw [edge] (T2) -- (T3);
+            \draw [edge] (T3) -- (T5);
+            \draw [edge] (T5) -- (T6);
+            \draw [edge] (T3) -- (T6);
+            \draw [edge] (T2) -- (T5);
+
+            \node at (5, 2) { ~ };
+            \node at (5, -1) { ~ };
+        \end{tikzpicture}
+        \vspace{1em}
+    }
+
+    \only<2> {
+        \begin{itemize}
+            \item $G^d$ is the graph with the same vertex set as $G$, and an edge between $v$ and
+                $w$ if the distance between $v$ and $w$ in $G$ is at most $d$.
+
+            \item For any $d$, a subgraph isomorphism $i : P \rightarrowtail T$ is also a
+                subgraph isomorphism $i^d : P^d \rightarrowtail T^d$.
+        \end{itemize}
+
+        \vspace{1em}
+
+        \centering
+        \begin{tikzpicture}
+            \node [vertex] (Pc) at (0, 0) { c };
+            \node [vertexc3] (Pd) at (1, 0) { d };
+            \node [vertex] (Pb) at (1, 1) { b };
+            \node [vertexc1] (Pa) at (0, 1) { a };
+
+            \draw [edge] (Pa) -- (Pb);
+            \draw [edge] (Pb) -- (Pc);
+            \draw [edge] (Pc) -- (Pd);
+            \draw [edge] (Pd) -- (Pb);
+            \draw [edge] (Pa) -- (Pc);
+
+            \draw [edgel3] (Pa) -- (Pd);
+
+            \node [anchor=center, font=\huge] at (2.565, 0.5) { $\centernot\rightarrowtail$ };
+
+            \node [vertexc1] (T1) at (4.13, 0.5) { 1 };
+            \node [vertex] (T5) at (5, 0) { 5 };
+            \node [vertex] (T6) at (6, 0) { 6 };
+            \node [vertex] (T3) at (6, 1) { 3 };
+            \node [vertex] (T2) at (5, 1) { 2 };
+            \node [vertexc3] (T4) at (6.87, 0.5) { 4 };
+
+            \draw [edge] (T1) -- (T2);
+            \draw [edge] (T1) -- (T5);
+            \draw [edge] (T4) -- (T3);
+            \draw [edge] (T4) -- (T6);
+            \draw [edge] (T2) -- (T6);
+            \draw [edge] (T2) -- (T3);
+            \draw [edge] (T3) -- (T5);
+            \draw [edge] (T5) -- (T6);
+            \draw [edge] (T3) -- (T6);
+            \draw [edge] (T2) -- (T5);
+
+            \draw [edgel3] (T1) to [in=135, out=90] (T3);
+            \draw [edgel3] (T1) to [in=225, out=270] (T6);
+
+            \draw [edgel3] (T4) to [in=45, out=90] (T2);
+            \draw [edgel3] (T4) to [in=315, out=270] (T5);
+
+            \node at (5, 2) { ~ };
+            \node at (5, -1) { ~ };
+        \end{tikzpicture}
+        \vspace{1em}
+    }
+
+    \only<3> {
+        \begin{itemize}
+            \item We can do something stronger: rather than looking at distances, we can look at
+                (simple) paths, and we can count how many there are.
+
+            \item This is \NP-hard in general, but only lengths 2 and 3 and counts of 2 and 3 are
+                useful in practice.
+
+            \item We construct these graph pairs once, at the top of search.
+        \end{itemize}
+    }
+
+\end{frame}
+
 \begin{frame}{Search as a Tree}
     \begin{center}
     \begin{tikzpicture}%{{{
@@ -460,9 +583,10 @@
 
 \begin{frame}{Backjumping}
 
-\end{frame}
-
-\begin{frame}{Implied Constraints for Subgraph Isomorphism}
+    \begin{itemize}
+        \item When backtracking, see if the current assignment actually removed any values which
+            could have helped prevent the failure. If not, jump back another step.
+    \end{itemize}
 
 \end{frame}
 
