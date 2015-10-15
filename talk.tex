@@ -461,7 +461,7 @@
     \only<3> {
         \begin{itemize}
             \item We can do something stronger: rather than looking at distances, we can look at
-                (simple) paths, and we can count how many there are.
+                \textbf{(simple) paths}, and we can count how many there are.
 
             \item This is \NP-hard in general, but only lengths 2 and 3 and counts of 2 and 3 are
                 useful in practice.
@@ -475,10 +475,10 @@
 \begin{frame}{Backtracking Search as a Tree}
     \only<1> {
         \begin{itemize}
-            \item Sometimes a variable's domain will become empty. Then we fail, and backtrack one level
+            \item Sometimes we guess incorrectly, or there is no solution.
+            \item When a variable's domain becomes empty, we fail, and \textbf{backtrack} one level
                 and try something else.
         \end{itemize}
-
     }
 
     \only<2> {
@@ -587,7 +587,7 @@
     \end{tikzpicture}\end{center}
 
     \begin{itemize}
-        \item For optimisation: keep track of the best solution we've found so far. If we can show
+        \item For optimisation: keep track of the \textbf{best solution} we've found so far. If we can show
             we can't beat it, backtrack immediately.
     \end{itemize}
 
@@ -680,7 +680,7 @@
 
     \begin{itemize}
         \item When backtracking, see if the current assignment actually removed any values which
-            could have helped prevent the failure. If not, jump back another step.
+            could have helped prevent the failure. If not, \textbf{jump back} another step.
     \end{itemize}
 
 \end{frame}
@@ -978,17 +978,12 @@
 
     \only <4> {
         \begin{itemize}
-            \item Value-ordering heuristics tend to be worst high up the search tree.
+            \item Value-ordering heuristics tend to be \textbf{worst high up} the search tree.
             \item But depth-first searches commit completely to the first choice made\ldots
             \item Discrepancy searches can avoid this problem by doing more work in total. Parallel
-                search can give similar benefits for free.
+                search can give \textbf{similar benefits for free}.
         \end{itemize}
     }
-
-    \only <5> {
-        \vskip-5pt \input{gen-graph-speedups-scatter}
-    }
-
 \end{frame}
 
 \begin{frame}{Safety and Reproducibility}
@@ -1042,6 +1037,12 @@
                 \end{alignat*}
         \end{itemize}
     }
+
+\end{frame}
+
+\begin{frame}{Parallel Search is Worth Doing}
+
+    \vskip-5pt \input{gen-graph-speedups-scatter}
 
 \end{frame}
 
