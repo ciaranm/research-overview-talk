@@ -5,7 +5,9 @@ TABLES =
 
 GRAPHS = gen-graph-phase-transition.tex \
 	 gen-graph-non-induced-1.tex gen-graph-induced-1.tex \
-	 gen-graph-non-induced-2.tex gen-graph-induced-2.tex
+	 gen-graph-non-induced-2.tex gen-graph-induced-2.tex \
+	 gen-graph-speedup.tex \
+	 gen-graph-speedups-scatter.tex
 
 tables : $(TABLES)
 
