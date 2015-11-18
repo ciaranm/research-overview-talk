@@ -132,7 +132,7 @@
 
 % }}}
 
-\title[Solving Hard Graph Problems in Parallel]{Solving Hard Graph Problems \\ in Parallel}
+\title[Finding Little Graphs Inside Big Graphs (in Parallel)]{Finding Little Graphs \\ Inside Big Graphs (in Parallel)}
 \author[Ciaran McCreesh and Patrick Prosser]{\textbf{Ciaran McCreesh} and Patrick Prosser}
 
 \begin{document}
@@ -147,7 +147,39 @@
     \end{frame}
 }
 
-\section{\ldots{}Hard Graph Problems\ldots}
+\section{Hard Graph Problems}
+
+\begin{frame}{Subgraph Isomorphism}
+    \begin{center}\begin{tikzpicture}
+        \node[draw, circle, fill=uofgcobalt, inner sep=4pt, font=\bfseries] (Na) at (1,  0) {1};
+        \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (Nb) at (1, -1.5) {2};
+        \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (Nc) at (0, -3) {3};
+        \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (Nd) at (2, -3) {4};
+
+        \draw [ultra thick] (Na) -- (Nb);
+        \draw [ultra thick] (Nb) -- (Nc);
+        \draw [ultra thick] (Nc) -- (Nd);
+        \draw [ultra thick] (Nb) -- (Nd);
+
+        \node[draw, circle, fill=uofgcobalt, inner sep=4pt, font=\bfseries] (N1) at (5.5,  0) {1};
+        \node[draw, circle, fill=white, inner sep=4pt, font=\bfseries] (N2) at (7.5,  0) {2};
+        \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (N3) at (5.5, -1.5) {3};
+        \node[draw, circle, fill=white, inner sep=4pt, font=\bfseries] (N4) at (7.5, -1.5) {4};
+        \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (N5) at (5.5, -3) {5};
+        \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (N6) at (7.5, -3) {6};
+
+        \draw [thick, color=uofgsandstone!50] (N1) -- (N2);
+        \draw [ultra thick] (N1) -- (N3);
+        \draw [thick, color=uofgsandstone!50] (N1) -- (N4);
+        \draw [thick, color=uofgsandstone!50] (N2) -- (N4);
+        \draw [ultra thick] (N3) -- (N5);
+        \draw [ultra thick] (N3) -- (N6);
+        \draw [thick, color=uofgsandstone!50] (N4) -- (N6);
+        \draw [ultra thick] (N5) -- (N6);
+        \draw [thick, color=uofgsandstone!50] (N2) to [in=45, out=315] (N6);
+    \end{tikzpicture}\end{center}
+
+\end{frame}
 
 \begin{frame}{The Maximum Clique Problem}
     \begin{center}\begin{tikzpicture}
@@ -183,38 +215,6 @@
 
 \end{frame}
 
-\begin{frame}{Subgraph Isomorphism}
-    \begin{center}\begin{tikzpicture}
-        \node[draw, circle, fill=uofgcobalt, inner sep=4pt, font=\bfseries] (Na) at (1,  0) {1};
-        \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (Nb) at (1, -1.5) {2};
-        \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (Nc) at (0, -3) {3};
-        \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (Nd) at (2, -3) {4};
-
-        \draw [ultra thick] (Na) -- (Nb);
-        \draw [ultra thick] (Nb) -- (Nc);
-        \draw [ultra thick] (Nc) -- (Nd);
-        \draw [ultra thick] (Nb) -- (Nd);
-
-        \node[draw, circle, fill=uofgcobalt, inner sep=4pt, font=\bfseries] (N1) at (5.5,  0) {1};
-        \node[draw, circle, fill=white, inner sep=4pt, font=\bfseries] (N2) at (7.5,  0) {2};
-        \node[draw, circle, fill=uofgpumpkin, inner sep=4pt, font=\bfseries] (N3) at (5.5, -1.5) {3};
-        \node[draw, circle, fill=white, inner sep=4pt, font=\bfseries] (N4) at (7.5, -1.5) {4};
-        \node[draw, circle, fill=uofglawn, inner sep=4pt, font=\bfseries] (N5) at (5.5, -3) {5};
-        \node[draw, circle, fill=uofgthistle, inner sep=4pt, font=\bfseries] (N6) at (7.5, -3) {6};
-
-        \draw [thick, color=uofgsandstone!50] (N1) -- (N2);
-        \draw [ultra thick] (N1) -- (N3);
-        \draw [thick, color=uofgsandstone!50] (N1) -- (N4);
-        \draw [thick, color=uofgsandstone!50] (N2) -- (N4);
-        \draw [ultra thick] (N3) -- (N5);
-        \draw [ultra thick] (N3) -- (N6);
-        \draw [thick, color=uofgsandstone!50] (N4) -- (N6);
-        \draw [ultra thick] (N5) -- (N6);
-        \draw [thick, color=uofgsandstone!50] (N2) to [in=45, out=315] (N6);
-    \end{tikzpicture}\end{center}
-
-\end{frame}
-
 \begin{frame}{Maximum Common Subgraph}
     \begin{center}\begin{tikzpicture}%{{{
         \node[draw, circle, fill=uofgcobalt, inner sep=4pt, font=\bfseries] (Ma) at (1, -7.5) {1};
@@ -243,7 +243,7 @@
     \end{tikzpicture}\end{center}
 \end{frame}
 
-\begin{frame}{Maximum Common Connected Subgraph}
+\begin{frame}{Maximum Common Connected Subgraph?}
 
     \begin{columns}
         \begin{column}{0.45\textwidth}
@@ -258,7 +258,7 @@
 
 \end{frame}
 
-\section{Solving\ldots}
+\section{Practical Algorithms}
 
 \begin{frame}{Who Cares?}
     \begin{columns}
@@ -294,9 +294,14 @@
         \item Real-world inputs rarely have nice properties (low treewidth, particular degree
             spreads that are polynomial, etc).
 
-        \item Worst-case performance analysis tells us nothing.
+        \item We can solve some subgraph isomorphism problems with thousand vertex patterns and ten
+            thousand vertex targets in a few seconds.
 
-        \item Constant factors matter.
+            \begin{itemize}
+                \item Worst-case performance analysis tells us nothing.
+
+                \item Constant factors matter.
+            \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -305,21 +310,21 @@
         \item We have some \textbf{variables}, each with a \textbf{domain}, and we want to give each
             variable a value from its domain.
             \begin{itemize}
-                \item Clique: a boolean variable for each vertex.
                 \item Subgraph isomorphism: a variable for each pattern vertex, with domains being
                     target vertices.
+                \item Clique: a boolean variable for each vertex.
             \end{itemize}
         \item There are \textbf{constraints} between variables.
             \begin{itemize}
-                \item Clique: for each pair of non-adjacent vertices, at least one of the two
-                    variables must be false.
                 \item Subgraph isomorphism: all-different (injectivity), and adjacent pairs of
                     vertices must be mapped to adjacent pairs of vertices.
+                \item Clique: for each pair of non-adjacent vertices, at least one of the two
+                    variables must be false.
             \end{itemize}
         \item There is an \textbf{objective}.
             \begin{itemize}
-                \item Clique: set as many variables to true as possible.
                 \item Subgraph isomorphism: give each variable a value.
+                \item Maximum clique: set as many variables to true as possible.
             \end{itemize}
     \end{itemize}
 \end{frame}
@@ -797,7 +802,7 @@
     \end{tikzpicture}%}}}
 \end{frame}
 
-\section{\ldots{}In Parallel}
+\section{In Parallel}
 
 \begin{frame}{Thread-Parallel Tree Search}
 
