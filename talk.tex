@@ -294,8 +294,8 @@
         \item Real-world inputs rarely have nice properties (low treewidth, particular degree
             spreads that are polynomial, etc).
 
-        \item We can solve some subgraph isomorphism problems with thousand vertex patterns and ten
-            thousand vertex targets in a few seconds.
+        \item We can still solve some subgraph isomorphism problems with thousand vertex patterns
+            and ten thousand vertex targets in a few seconds.
 
             \begin{itemize}
                 \item Worst-case performance analysis tells us nothing.
@@ -690,119 +690,124 @@
 
 \end{frame}
 
-\begin{frame}{Backjumping as a Tree}
-    \centering
-    \begin{tikzpicture}[scale=0.75]%{{{
-        \coordinate (R);
+\section{Phase Transitions}
 
-        \coordinate (N) at (R);
+\begin{frame}{Generating Hard Subgraph Isomorphism Instances}
 
-        \coordinate (N1) at ($(N) + (-4, -1.25)$);
-        \coordinate (N2) at ($(N) + ( 0, -1.25)$);
-        \coordinate (N3) at ($(N) + ( 4, -1.25)$);
+    \begin{itemize}
+        \item We can solve some random problem instances with a thousand pattern vertices, and ten
+            thousand target vertices. Can we solve \emph{any} instance with these sizes?
 
-        \foreach \na in {1, ..., 3}{
-            \coordinate (N\na 1) at ($(N\na) + (-1.25, -1)$);
-            \coordinate (N\na 2) at ($(N\na) + ( 0,    -1)$);
-            \coordinate (N\na 3) at ($(N\na) + ( 1.25, -1)$);
+        \item We like having lots of instances, to make sure we don't overfit algorithm parameters.
 
-            \foreach \nb in {1, ..., 3}{
-                \coordinate (N\na\nb t1) at ($(N\na\nb) + (-0.5, -1)$);
-                \coordinate (N\na\nb t2) at ($(N\na\nb) + ( 0.5, -1)$);
+        \item How do we create random subgraph isomorphism instances?
+    \end{itemize}
 
-                \coordinate (N\na\nb s1) at ($(N\na\nb) + (-0.3, -0.6)$);
-                \coordinate (N\na\nb s2) at ($(N\na\nb) + ( 0.3, -0.6)$);
-
-                \coordinate (N\na\nb h1) at ($(N\na\nb) + (-1.5, -3)$);
-                \coordinate (N\na\nb h2) at ($(N\na\nb) + ( 1.5, -3)$);
-            }
-        }
-
-        \foreach \na in {1, ..., 3}{
-            \draw (N) -- (N\na);
-            \foreach \nb in {1, ..., 3}{
-                \draw (N\na) -- (N\na\nb);
-            }
-        }
-
-        \tikzstyle{t} = [draw, fill, fill=uofgcobalt, rounded corners];
-        \tikzstyle{tf} = [draw, fill, fill=uofgpillarbox, rounded corners];
-        \tikzstyle{ts} = [draw, fill, fill=black!10!white, rounded corners];
-        \foreach \na in {1, ..., 3}{
-            \foreach \nb in {1, ..., 3}{
-                \ifthenelse{\na = 1}{
-                    \ifthenelse{\na\nb = 11}{
-                        \draw <1> [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                        \draw <2-> [tf] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                    }{}
-                    \ifthenelse{\na\nb = 12}{
-                        \draw <1-2> [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                        \draw <3-> [tf] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                    }{}
-                    \ifthenelse{\na\nb = 13}{
-                        \draw <1-3> [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                        \draw <4-> [ts] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                    }{}
-                }{
-                    \draw <1-6> [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                    \draw <7-> [ts] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                }
-            }
-        }
-
-        \tikzstyle{c} = [draw, circle, fill, fill=uofgcobalt];
-        \tikzstyle{cf} = [draw, circle, fill, fill=uofgpillarbox];
-        \tikzstyle{cx} = [draw, forbidden sign, fill, fill=uofgpillarbox];
-        \tikzstyle{cs} = [draw, forbidden sign, fill, fill=black!10!white];
-        \tikzstyle{cfs} = [draw, circle, fill, fill=black!10!white];
-        \node <1-7> [c] at (N) { };
-        \node <8-> [cx] at (N) { };
-
-        \foreach \na in {1, ..., 3}{
-            \ifthenelse{\na = 1}{
-                \node <1-4> [c] at (N\na) { };
-                \node <5> [cx] at (N\na) { };
-                \node <6-> [cf] at (N\na) { };
-                \node <6-> [font=\scriptsize] at (N1) { $\uparrow$ };
-            }{
-                \node <1-6> [c] at (N\na) { };
-                \node <7-> [cs] at (N\na) { };
-            }
-
-            \foreach \nb in {1, ..., 3}{
-                \ifthenelse{\na = 1}{
-                    \ifthenelse{\na\nb = 11}{
-                        \node <1> [c] at (N\na\nb) { };
-                        \node <2-> [cx] at (N\na\nb) { };
-                    }{}
-                    \ifthenelse{\na\nb = 12}{
-                        \node <1-2> [c] at (N\na\nb) { };
-                        \node <3-> [cf] at (N\na\nb) { };
-                        \node <3-> [font=\scriptsize] at (N12) { $\uparrow$ };
-                    }{}
-                    \ifthenelse{\na\nb = 13}{
-                        \node <1-3> [c] at (N\na\nb) { };
-                        \node <4-> [cs] at (N\na\nb) { };
-                    }{}
-                }{
-                    \node <1-6> [c] at (N\na\nb) { };
-
-                    \ifthenelse{\na\nb = 32}{
-                        \node <7-8> [cs] at (N\na\nb) { };
-                        \node <9-> [cfs] at (N\na\nb) { };
-                        \node <9-> [font=\scriptsize] at (N32) { $\uparrow$ };
-                    }{
-                        \node <7-> [cs] at (N\na\nb) { };
-                    }
-                }
-            }
-        }
-
-        \node at (-7, -5.5) { }; \node at (7, -5.5) { };
-    \end{tikzpicture}%}}}
 \end{frame}
 
-\section{In Parallel}
+\begin{frame}{Phase Transitions in Non-Induced Subgraph Isomorphism}
+
+    \only<1> {
+        \input{gen-graph-phase-transition}
+    }
+
+    \only<2> {
+        \input{gen-graph-non-induced-1}
+    }
+
+    \only<3> {
+        \input{gen-graph-non-induced-2}
+    }
+
+    \only<4> {
+        \input{gen-graph-non-induced-3}
+    }
+
+\end{frame}
+
+\begin{frame}{Heuristics from Maximising Expectations}
+
+    \only<1> {
+        \begin{itemize}
+            \item With a few dubious assumptions regarding independence and integers, the expected
+                number of solutions is \[ \langle Sol \rangle = t \cdot (t - 1) \cdot \ldots
+                        \cdot (t - p + 1) \cdot {d_t}^{d_p \cdot \binom{p}{2}} \textnormal{.} \]
+            \item If $\langle Sol \rangle \ll 1$, the instance is likely to be unsatisfiable.
+            \item Unfortunately, if $\langle Sol \rangle \gg 1$, things are a bit trickier\ldots
+        \end{itemize}
+    }
+
+    \only<2> {
+        \input{gen-graph-non-induced-prediction}
+    }
+
+    \only<3> {
+        \begin{itemize}
+            \item Suppose we wanted to maximise the expected number of solutions in a subproblem during
+                search. \\[0.3cm]
+
+        \end{itemize}
+        {\Large \[ \langle Sol \rangle = \tikzmark{sdfstart}t \cdot (t - 1) \cdot \ldots \cdot (t -
+                p + 1)\tikzmark{sdfend} \, \cdot \,
+                {\tikzmark{targetstart}d_t\tikzmark{targetend}
+                ~}^{\, d_p ~ \cdot ~ \binom{p}{2}}\tikzmark{patternend}
+        \] \\[0.5cm]}
+
+        \begin{tikzpicture}[remember picture, overlay]
+            \draw [decorate, decoration={brace, mirror, raise=0.2cm}, thick] (pic cs:sdfstart) --
+            (pic cs:sdfend) node [midway, below=0.3cm] { smallest domain };
+
+            \draw [decorate, decoration={brace, mirror, raise=0.2cm}, thick] (pic cs:targetstart) --
+            (pic cs:targetend) node [midway, below=0.3cm, text width=3em, align=center] { low degree };
+
+            \draw [decorate, decoration={brace, mirror, raise=0.2cm}, thick] ($(pic
+            cs:targetend)+(0.3,0)$) -- (pic cs:patternend) node [midway, below=0.3cm, text width=4em, align=center] { high degree };
+        \end{tikzpicture}
+
+        \begin{itemize}
+            \item These heuristics are used in practice (sort of), but were discovered through
+                guessing and experiments!
+        \end{itemize}
+    }
+
+\end{frame}
+
+\begin{frame}{Phase Transitions in Induced Subgraph Isomorphism}
+
+    \only<1> {
+        \input{gen-graph-induced-1}
+    }
+
+    \only<2> {
+        \input{gen-graph-induced-2}
+    }
+
+    \only<3> {
+        \input{gen-graph-induced-3}
+    }
+
+\end{frame}
+
+\begin{frame}{Can We Predict This?}
+
+    \only<1> {
+        \begin{itemize}
+            \item With a few more dubious assumptions, the expected
+                number of solutions is now \[ \langle Sol \rangle = t \cdot (t - 1) \cdot \ldots
+                    \cdot (t - p + 1) \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot {(1 - d_t)}^{(1 -
+                        d_p) \cdot \binom{p}{2}} \textnormal{.} \]
+            \item Degree-based value ordering heuristics don't seem to help. This is intuitive, but
+                does this formula give us a heuristic after all?
+        \end{itemize}
+    }
+
+    \only<2> {
+        \input{gen-graph-induced-prediction}
+    }
+
+\end{frame}
+
+\section{Parallelism}
 
 \begin{frame}{Thread-Parallel Tree Search}
 
@@ -1008,43 +1013,6 @@
 
 \end{frame}
 
-\begin{frame}{Parallel Backjumping as a Lazy Fold}
-
-    \only <1> {
-        \begin{itemize}
-            \item Lazily map each subproblem to Jump $F$ $\KwSty{or}$ Fail $F$ $\KwSty{or}$ Success.
-            \item Lazily fold, starting with Fail $\{ v \}$, as follows:
-                \begin{alignat*}{2}
-                    \underline{\hspace{1em}} &~\circled{$>$}~ \textnormal{Success} \hspace{1em} &&= \textnormal{Success} \\
-                    \underline{\hspace{1em}} &~\circled{$>$}~ \textnormal{Jump}~F \hspace{1em} &&= \textnormal{Jump}~F \\
-                    \textnormal{Fail}~F &~\circled{$>$}~ \textnormal{Fail}~G \hspace{1em} &&= \textnormal{Fail}~(F \cup G)
-                \end{alignat*}
-            \item If a Jump $F$ occurs to the left of a Success, we have a bug.
-        \end{itemize}
-    }
-
-    \only <2> {
-        \begin{itemize}
-            \item When multiplying, if any item is 0, the result is 0.
-                \begin{alignat*}{2}
-                    \underline{\hspace{1em}} &~\times~ 0 \hspace{1em} &&= 0 \\
-                    0 &~\times~ \underline{\hspace{1em}} \hspace{1em} &&= 0
-                \end{alignat*}
-            \item Here, if any item is Success, the result is Success, and we do not need to evaluate
-                the rest of the map.
-                \begin{alignat*}{2}
-                    \underline{\hspace{1em}} &~\circled{$>$}~ \textnormal{Success} \hspace{1em} &&= \textnormal{Success}
-                \end{alignat*}
-            \item If any item is Jump $F$, the result is either Jump $F$, or some Jump $G$ or Success
-                that is further to the left. We do not need to evaluate any item to the right.
-                \begin{alignat*}{2}
-                    \underline{\hspace{1em}} &~\circled{$>$}~ \textnormal{Jump}~F \hspace{1em} &&= \textnormal{Jump}~F
-                \end{alignat*}
-        \end{itemize}
-    }
-
-\end{frame}
-
 \begin{frame}{Parallel Search is Worth Doing}
 
     \vskip-5pt \input{gen-graph-speedups-scatter}
@@ -1087,43 +1055,6 @@
 
         \item But then we throw that information away\ldots
     \end{itemize}
-
-\end{frame}
-
-\begin{frame}{Generating Hard Subgraph Isomorphism Instances}
-
-    \begin{itemize}
-        \item We can solve some random problem instances with a thousand pattern vertices, and ten
-            thousand target vertices. Can we solve \emph{any} instance with these sizes?
-
-        \item We like having lots of instances, to make sure we don't overfit algorithm parameters.
-
-        \item How do we randomly create subgraph isomorphism instances?
-    \end{itemize}
-
-\end{frame}
-
-\begin{frame}[t]{Phase Transitions}
-
-    \only<1> {
-        \input{gen-graph-phase-transition}
-    }
-
-    \only<2> {
-        \input{gen-graph-non-induced-1}
-    }
-
-    \only<3> {
-        \input{gen-graph-induced-1}
-    }
-
-    \only<4> {
-        \input{gen-graph-non-induced-2}
-    }
-
-    \only<5> {
-        \input{gen-graph-induced-2}
-    }
 
 \end{frame}
 
