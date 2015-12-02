@@ -8,6 +8,7 @@ GRAPHS = gen-graph-phase-transition.tex \
 	 gen-graph-non-induced-2.tex gen-graph-induced-2.tex \
 	 gen-graph-non-induced-3.tex gen-graph-induced-3.tex \
 	 gen-graph-non-induced-prediction.tex gen-graph-induced-prediction.tex \
+	 gen-graph-induced-reduction.tex \
 	 gen-graph-speedup.tex \
 	 gen-graph-speedups-scatter.tex
 
