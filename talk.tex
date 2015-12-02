@@ -1042,14 +1042,17 @@
     \begin{itemize}
         \item My ``wish list'':
             \begin{enumerate}
-                \item Parallel search should not be substantially slower than sequential search.
-                \item Adding more processors should not make things substantially worse.
-                \item Running the same program twice on the same hardware should give similar
-                    runtimes.
+                \item Parallel search should \textbf{not be substantially
+                    slower} than sequential search.
+                \item Adding more processors should \textbf{not make things
+                    substantially worse}.
+                \item Running the same program twice on the same hardware
+                    should give \textbf{similar runtimes}.
             \end{enumerate}
         \item This is surprisingly tricky.
-        \item On top of all that, we want to prioritise work stealing from where we're most likely
-            to be wrong, or possibly from where we're most likely not to eliminate a subtree.
+        \item On top of all that, we want to \textbf{prioritise work stealing}
+            from where we're most likely to be wrong, or possibly from where
+            we're most likely not to eliminate a subtree.
     \end{itemize}
 
 \end{frame}
@@ -1091,8 +1094,8 @@
 \begin{frame}{Explaining Failures}
 
     \begin{itemize}
-        \item Backjumping works because when we fail, we work out why, and use that to backtrack
-            further.
+        \item Backjumping works because when we fail, we \textbf{work out why},
+            and use that to backtrack further.
 
         \item But then we throw that information away\ldots
     \end{itemize}
@@ -1102,8 +1105,17 @@
 \begin{frame}{Graph Algorithms and Optimisation}
 
     \begin{itemize}
-        \item How do we solve problems that are ``subgraph isomorphism plus some other
-            constraints''?
+        \item There are a lot of real-world optimisation problems involving \textbf{a
+            graph problem} (subgraph isomorphism, subgraph covering, finding
+            sequences of related subgraphs, clique finding, graph colouring,
+            \ldots), plus some \textbf{other constraints}.
+
+        \item Can we make these problems easier to specify in a
+            \textbf{high-level constraint modelling language} like Essence' or
+            MiniZinc?
+
+        \item Can we combine dedicated graph algorithms with CP, MIP or SAT
+            solvers?
     \end{itemize}
 
 \end{frame}
