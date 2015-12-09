@@ -14,7 +14,8 @@ GRAPHS = gen-graph-phase-transition.tex \
 	 gen-graph-speedup-3.tex \
 	 gen-graph-speedup-4.tex \
 	 gen-graph-speedups-scatter.tex \
-	 gen-graph-speedups-ecdf.tex
+	 gen-graph-speedups-ecdf.tex \
+	 gen-graph-ecdf.tex
 
 tables : $(TABLES)
 
