@@ -1,7 +1,7 @@
 # vim: set et ft=gnuplot sw=4 :
 
 set terminal tikz color size 3.2in,2.7in font '\tiny'
-set output "gen-graph-speedup.tex"
+set output "gen-graph-speedup-2.tex"
 
 set xlabel "Number of threads"
 set ylabel "Speedup"
@@ -27,5 +27,6 @@ set yrange [0:70]
 plot \
     "graph-togian-brock400_1-speedup-nodonation.data" u 1:2 with l lc '#009dec' lt 1 lw 3 ti "Distance 1" at end, \
     "graph-togian-brock400_1-speedup-nodonation-depth2.data" u 1:2 with l lc '#951272' lt 1 lw 3 ti 'Distance 2' at end, \
-    "graph-togian-brock400_1-speedup-nodonation-depth3.data" u 1:2 with l lc '#84bd00' lt 1 lw 3 ti "Distance 3" at end
+    "graph-togian-brock400_1-speedup-nodonation-depth3.data" u 1:2 with l lc '#84bd00' lt 1 lw 3 ti "Distance 3" at end, \
+    "graph-togian-brock400_1-speedup-d3.data" u 1:2 with l lc '#ffb948' lt 2 lw 3 ti "Resplitting" at end
 

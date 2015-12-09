@@ -207,7 +207,7 @@
     \only<3>{
         \begin{itemize}
             \item Find an \emph{injective} mapping from a \emph{pattern} graph to a \emph{target} graph.
-            \item Adjacent vertices must be mapped to adjacent vertices.
+            \item \textbf{Adjacent} vertices must be \textbf{mapped to adjacent} vertices.
             \item For the \emph{induced} problem variant, non-adjacent vertices
                 must be mapped to non-adjacent vertices.
         \end{itemize}
@@ -277,21 +277,6 @@
     \end{tikzpicture}\end{center}
 \end{frame}
 
-\begin{frame}{Maximum Common Connected Subgraph?}
-
-    \begin{columns}
-        \begin{column}{0.45\textwidth}
-            \centering
-            \chemfig{*6(-=(-[7]N(-[5]H)(-[7]H))-=-=)}
-        \end{column}
-        \begin{column}{0.45\textwidth}
-            \centering
-            \chemfig{*6(-=(-[7]O-[7]N(-[5]H)(-[7]H))-=-=)}
-        \end{column}
-    \end{columns}
-
-\end{frame}
-
 \section{Practical Algorithms}
 
 \begin{frame}{Who Cares?}
@@ -323,19 +308,30 @@
     \end{columns}
 \end{frame}
 
+\begin{frame}{Maximum Common Connected Subgraph?}
+
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \centering
+            \chemfig{*6(-=(-[7]N(-[5]H)(-[7]H))-=-=)}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \centering
+            \chemfig{*6(-=(-[7]O-[7]N(-[5]H)(-[7]H))-=-=)}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
 \begin{frame}{Practical Algorithms}
     \begin{itemize}
         \item Real-world inputs rarely have nice properties (low treewidth, particular degree
             spreads that are polynomial, etc).
 
-        \item We can still solve some subgraph isomorphism problems with thousand vertex patterns
-            and ten thousand vertex targets in a few seconds.
+        \item We can still solve some subgraph isomorphism problems with \textbf{thousand vertex
+            patterns} and \textbf{ten thousand vertex targets} in a few seconds.
 
-            \begin{itemize}
-                \item Worst-case performance analysis tells us nothing.
-
-                \item Constant factors matter.
-            \end{itemize}
+        \item Worst-case analysis is useless, and constant factors matter.
     \end{itemize}
 \end{frame}
 
@@ -363,27 +359,12 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Preprocessing}
+\begin{frame}{Inference}
     \begin{itemize}
         \item We want to \textbf{cross out values} from domains, until only one value is left in
             each.
         \item Subgraph isomorphism: high degree vertices cannot be mapped to low degree vertices.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Search}
-    \begin{itemize}
-        \item Sometimes we have to \textbf{guess}: pick a variable $x$. Then for each value $v_i$ in
-            its domain in turn, see what happens if we force $x = v_i$.
-        \item There are good heuristics telling us which variable to pick first.
-        \item There are heuristics telling us which value to pick first, but this seems to be
-            less reliable in general.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Inference}
-    \begin{itemize}
-        \item After we guess an assignment, we can \textbf{infer additional deletions}. This can
+        \item If an assignment becomes forced, we can \textbf{infer additional deletions}. This can
             have a cascade effect.
     \end{itemize}
 \end{frame}
@@ -513,78 +494,14 @@
 
 \end{frame}
 
-\begin{frame}{Backtracking Search as a Tree}
-    \only<1> {
-        \begin{itemize}
-            \item Sometimes we guess incorrectly, or there is no solution.
-            \item When a variable's domain becomes empty, we fail, and \textbf{backtrack} one level
-                and try something else.
-        \end{itemize}
-    }
-
-    \only<2> {
-        \begin{center}
-        \begin{tikzpicture}%{{{
-            \coordinate (R);
-
-            \coordinate (N) at (R);
-
-            \coordinate (N1) at ($(N) + (-4, -0.75)$);
-            \coordinate (N2) at ($(N) + ( 0, -0.75)$);
-            \coordinate (N3) at ($(N) + ( 4, -0.75)$);
-
-            \foreach \na in {1, ..., 3}{
-                \coordinate (N\na 1) at ($(N\na) + (-1.25, -1)$);
-                \coordinate (N\na 2) at ($(N\na) + ( 0,    -1)$);
-                \coordinate (N\na 3) at ($(N\na) + ( 1.25, -1)$);
-
-                \foreach \nb in {1, ..., 3}{
-                    \coordinate (N\na\nb t1) at ($(N\na\nb) + (-0.45, -1)$);
-                    \coordinate (N\na\nb t2) at ($(N\na\nb) + ( 0.45, -1)$);
-
-                    \coordinate (N\na\nb s1) at ($(N\na\nb) + (-0.25, -0.5)$);
-                    \coordinate (N\na\nb s2) at ($(N\na\nb) + ( 0.25, -0.5)$);
-
-                    \coordinate (N\na\nb h1) at ($(N\na\nb) + (-0.5, -1.4)$);
-                    \coordinate (N\na\nb h2) at ($(N\na\nb) + ( 0.5, -1.4)$);
-                }
-            }
-
-            \foreach \na in {1, ..., 3}{
-                \draw (N) -- (N\na);
-                \foreach \nb in {1, ..., 3}{
-                    \draw (N\na) -- (N\na\nb);
-                }
-            }
-
-            \tikzstyle{t} = [draw, fill, fill=uofgcobalt, rounded corners];
-
-            \draw [t] (N11) -- (N11s1) -- (N11s2) -- cycle;
-            \draw [t] (N12) -- (N12s1) -- (N12s2) -- cycle;
-            \draw [t] (N13) -- (N13s1) -- (N13s2) -- cycle;
-
-            \draw [t] (N21) -- (N21t1) -- (N21t2) -- cycle;
-            \draw [t] (N22) -- (N22h1) -- (N22h2) -- cycle;
-            \draw [t] (N23) -- (N23s1) -- (N23s2) -- cycle;
-
-            \draw [t] (N31) -- (N31s1) -- (N31s2) -- cycle;
-            \draw [t] (N32) -- (N32t1) -- (N32t2) -- cycle;
-            \draw [t] (N33) -- (N33s1) -- (N33s2) -- cycle;
-
-            \tikzstyle{c} = [draw, circle, fill, fill=uofgcobalt];
-            \node [c] at (N) { };
-
-            \foreach \na in {1, ..., 3}{
-                \node [c] at (N\na) { };
-
-                \foreach \nb in {1, ..., 3}{
-                    \node [c] at (N\na\nb) { };
-                }
-            }
-        \end{tikzpicture}%}}}
-        \end{center}
-    }
-
+\begin{frame}{Search}
+    \begin{itemize}
+        \item Sometimes we have to \textbf{guess}: pick a variable $x$. Then for each value $v_i$ in
+            its domain in turn, see what happens if we force $x = v_i$.
+        \item There are good heuristics telling us which variable to pick first.
+        \item There are heuristics telling us which value to pick first, but this seems to be
+            less reliable in general.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Branch and Bound}
@@ -634,89 +551,6 @@
 
 \end{frame}
 
-\begin{frame}{Eliminable Sub-trees}
-    \begin{center}
-    \begin{tikzpicture}%{{{
-        \coordinate (R);
-
-        \coordinate (N) at (R);
-
-        \coordinate (N1) at ($(N) + (-4, -0.75)$);
-        \coordinate (N2) at ($(N) + ( 0, -0.75)$);
-        \coordinate (N3) at ($(N) + ( 4, -0.75)$);
-
-        \foreach \na in {1, ..., 3}{
-            \coordinate (N\na 1) at ($(N\na) + (-1.25, -1)$);
-            \coordinate (N\na 2) at ($(N\na) + ( 0,    -1)$);
-            \coordinate (N\na 3) at ($(N\na) + ( 1.25, -1)$);
-
-            \foreach \nb in {1, ..., 3}{
-                \coordinate (N\na\nb t1) at ($(N\na\nb) + (-0.45, -1)$);
-                \coordinate (N\na\nb t2) at ($(N\na\nb) + ( 0.45, -1)$);
-
-                \coordinate (N\na\nb s1) at ($(N\na\nb) + (-0.25, -0.5)$);
-                \coordinate (N\na\nb s2) at ($(N\na\nb) + ( 0.25, -0.5)$);
-
-                \coordinate (N\na\nb h1) at ($(N\na\nb) + (-0.5, -1.4)$);
-                \coordinate (N\na\nb h2) at ($(N\na\nb) + ( 0.5, -1.4)$);
-            }
-        }
-
-        \foreach \na in {1, ..., 3}{
-            \draw (N) -- (N\na);
-            \foreach \nb in {1, ..., 3}{
-                \draw (N\na) -- (N\na\nb);
-            }
-        }
-
-        \tikzstyle{t} = [draw, fill, fill=uofgcobalt, rounded corners];
-        \tikzstyle{u} = [draw, fill, fill=black!10!white, rounded corners];
-
-        \draw <1> [t] (N11) -- (N11s1) -- (N11s2) -- cycle;
-        \draw <1> [t] (N12) -- (N12s1) -- (N12s2) -- cycle;
-        \draw <1> [t] (N13) -- (N13s1) -- (N13s2) -- cycle;
-        \draw <1> [t] (N21) -- (N21t1) -- (N21t2) -- cycle;
-        \draw <1> [t] (N22) -- (N22h1) -- (N22h2) -- cycle;
-        \draw <1> [t] (N23) -- (N23s1) -- (N23s2) -- cycle;
-        \draw <1> [t] (N31) -- (N31s1) -- (N31s2) -- cycle;
-        \draw <1> [t] (N32) -- (N32t1) -- (N32t2) -- cycle;
-        \draw <1> [t] (N33) -- (N33s1) -- (N33s2) -- cycle;
-
-
-        \draw <2> [t] (N11) -- (N11s1) -- (N11s2) -- cycle;
-        \draw <2> [t] (N12) -- (N12s1) -- (N12s2) -- cycle;
-        \draw <2> [u] (N13) -- (N13s1) -- (N13s2) -- cycle;
-        \draw <2> [t] (N21) -- (N21t1) -- (N21t2) -- cycle;
-        \draw <2> [t] (N22) -- (N22h1) -- (N22h2) -- cycle;
-        \draw <2> [u] (N23) -- (N23s1) -- (N23s2) -- cycle;
-        \draw <2> [t] (N31) -- (N31s1) -- (N31s2) -- cycle;
-        \draw <2> [u] (N32) -- (N32t1) -- (N32t2) -- cycle;
-        \draw <2> [u] (N33) -- (N33s1) -- (N33s2) -- cycle;
-
-        \tikzstyle{c} = [draw, circle, fill, fill=uofgcobalt];
-        \tikzstyle{d} = [draw, circle, fill, fill=black!10!white];
-        \node [c] at (N) { };
-
-        \foreach \na in {1, ..., 3}{
-            \node [c] at (N\na) { };
-
-            \foreach \nb in {1, ..., 3}{
-                \ifthenelse{\nb = 3 \OR \na\nb = 32}{
-                    \node <1> [c] at (N\na\nb) { };
-                    \node <2> [d] at (N\na\nb) { };
-                }{
-                    \node [c] at (N\na\nb) { };
-                }
-            }
-        }
-
-        \node [c] at (N21t1) { };
-        \node at (N21t1) { $\star$ };
-    \end{tikzpicture}%}}}
-    \end{center}
-
-\end{frame}
-
 \begin{frame}{Backjumping}
 
     \begin{itemize}
@@ -731,10 +565,11 @@
 \begin{frame}{Generating Hard Subgraph Isomorphism Instances}
 
     \begin{itemize}
-        \item We can solve some random problem instances with a thousand pattern vertices, and ten
-            thousand target vertices. Can we solve \emph{any} instance with these sizes?
+        \item We can solve some problem instances with a thousand pattern vertices, and ten thousand
+            target vertices. Can we solve \emph{any} instance with these sizes?
 
-        \item We like having lots of instances, to make sure we don't overfit algorithm parameters.
+        \item We like having \textbf{lots of instances}, to make sure we don't overfit algorithm
+            parameters.
 
         \item How do we create random subgraph isomorphism instances?
     \end{itemize}
@@ -743,22 +578,31 @@
 
 \begin{frame}{Phase Transitions in Non-Induced Subgraph Isomorphism}
 
-    \only<1> {
-        \input{gen-graph-phase-transition}
-    }
+    \input{gen-graph-phase-transition}
 
-    \only<2> {
+\end{frame}
+
+\begin{frame}{This Looks Familiar\ldots}
+    \centering
+    \includegraphics*[keepaspectratio=true,scale=0.25]{sat.jpg}
+
+    \par\flushleft
+    Understanding the Empirical Hardness of NP-Complete Problems. Kevin Leyton-Brown, Holger H.
+    Hoos, Frank Hutter, Lin Xu.  Communications of the ACM, Vol. 57 No. 5, Pages 98-107
+\end{frame}
+
+\begin{frame}{Varying Both Densities?}
+    \only<1> {
         \input{gen-graph-non-induced-1}
     }
 
-    \only<3> {
+    \only<2> {
         \input{gen-graph-non-induced-2}
     }
 
-    \only<4> {
+    \only<3> {
         \input{gen-graph-non-induced-3}
     }
-
 \end{frame}
 
 \begin{frame}{Heuristics from Maximising Expectations}
@@ -1027,7 +871,22 @@
         \input{gen-graph-speedup}
     }
 
-    \only <4> {
+    \only<4> {
+        \centering
+        \input{gen-graph-speedup-2}
+    }
+
+    \only<5> {
+        \centering
+        \input{gen-graph-speedup-3}
+    }
+
+    \only<6> {
+        \centering
+        \input{gen-graph-speedup-4}
+    }
+
+    \only <7> {
         \begin{itemize}
             \item Value-ordering heuristics tend to be \textbf{worst high up} the search tree.
             \item But depth-first searches commit completely to the first choice made\ldots
@@ -1039,27 +898,35 @@
 
 \begin{frame}{Safety and Reproducibility}
 
-    \begin{itemize}
-        \item My ``wish list'':
-            \begin{enumerate}
-                \item Parallel search should \textbf{not be substantially
-                    slower} than sequential search.
-                \item Adding more processors should \textbf{not make things
-                    substantially worse}.
-                \item Running the same program twice on the same hardware
-                    should give \textbf{similar runtimes}.
-            \end{enumerate}
-        \item This is surprisingly tricky.
-        \item On top of all that, we want to \textbf{prioritise work stealing}
-            from where we're most likely to be wrong, or possibly from where
-            we're most likely not to eliminate a subtree.
-    \end{itemize}
+    \only<1>{
+        \begin{itemize}
+            \item My ``wish list'':
+                \begin{enumerate}
+                    \item Parallel search should \textbf{not be substantially
+                        slower} than sequential search.
+                    \item Adding more processors should \textbf{not make things
+                        substantially worse}.
+                    \item Running the same program twice on the same hardware
+                        should give \textbf{similar runtimes}.
+                \end{enumerate}
+            \item This is surprisingly tricky.
+            \item On top of all that, we want to \textbf{prioritise work stealing}
+                from where we're most likely to be wrong, or possibly from where
+                we're most likely not to eliminate a subtree.
+        \end{itemize}
+    }
 
 \end{frame}
 
 \begin{frame}{Parallel Search is Worth Doing}
 
-    \vskip-5pt \input{gen-graph-speedups-scatter}
+    \only<1> {
+        \vskip-5pt \input{gen-graph-speedups-scatter}
+    }
+
+    \only<2> {
+        \vskip-5pt \input{gen-graph-speedups-ecdf}
+    }
 
 \end{frame}
 

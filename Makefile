@@ -10,7 +10,11 @@ GRAPHS = gen-graph-phase-transition.tex \
 	 gen-graph-non-induced-prediction.tex gen-graph-induced-prediction.tex \
 	 gen-graph-induced-reduction.tex \
 	 gen-graph-speedup.tex \
-	 gen-graph-speedups-scatter.tex
+	 gen-graph-speedup-2.tex \
+	 gen-graph-speedup-3.tex \
+	 gen-graph-speedup-4.tex \
+	 gen-graph-speedups-scatter.tex \
+	 gen-graph-speedups-ecdf.tex
 
 tables : $(TABLES)
 
