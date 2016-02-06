@@ -277,6 +277,21 @@
     \end{tikzpicture}\end{center}
 \end{frame}
 
+\begin{frame}{Maximum Common Connected Subgraph?}
+
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \centering
+            \chemfig{*6(-=(-[7]N(-[5]H)(-[7]H))-=-=)}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \centering
+            \chemfig{*6(-=(-[7]O-[7]N(-[5]H)(-[7]H))-=-=)}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
 \section{Practical Algorithms}
 
 \begin{frame}{Who Cares?}
@@ -306,21 +321,6 @@
             \end{itemize}
         \end{column}
     \end{columns}
-\end{frame}
-
-\begin{frame}{Maximum Common Connected Subgraph?}
-
-    \begin{columns}
-        \begin{column}{0.45\textwidth}
-            \centering
-            \chemfig{*6(-=(-[7]N(-[5]H)(-[7]H))-=-=)}
-        \end{column}
-        \begin{column}{0.45\textwidth}
-            \centering
-            \chemfig{*6(-=(-[7]O-[7]N(-[5]H)(-[7]H))-=-=)}
-        \end{column}
-    \end{columns}
-
 \end{frame}
 
 \begin{frame}{Practical Algorithms}
@@ -672,11 +672,6 @@
         \input{gen-graph-induced-3}
     }
 
-    \only<4> {
-        \centering
-        \input{gen-graph-induced-reduction}
-    }
-
 \end{frame}
 
 \begin{frame}{Can We Predict This?}
@@ -687,15 +682,41 @@
                 number of solutions is now \[ \langle Sol \rangle = t \cdot (t - 1) \cdot \ldots
                     \cdot (t - p + 1) \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot {(1 - d_t)}^{(1 -
                         d_p) \cdot \binom{p}{2}} \textnormal{.} \]
-            \item Degree-based value ordering heuristics don't seem to help. This is intuitive, but
-                does this formula give us a heuristic after all?
         \end{itemize}
     }
 
     \only<2> {
         \input{gen-graph-induced-prediction}
     }
+\end{frame}
 
+\begin{frame}{Why is the Middle Region Hard?}
+
+    \only<1> {
+        \centering
+        \input{gen-graph-induced-reduction}
+    }
+
+    \only<2> {
+        \input{gen-graph-induced-kappa}
+    }
+
+\end{frame}
+
+\begin{frame}{Induced Heuristics?}
+
+    \only<1> {
+        \begin{itemize}
+            \item For anything we say about degree, the opposite holds for the complement constraints.
+
+            \item Degree-based value ordering heuristics don't seem to help. This is intuitive, but
+                does this formula give us a heuristic after all?
+        \end{itemize}
+    }
+
+    \only<2> {
+        \input{gen-graph-induced-heuristic}
+    }
 \end{frame}
 
 \section{Parallelism}
