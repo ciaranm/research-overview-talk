@@ -17,6 +17,7 @@
 \usepackage{mathtools}
 \usepackage{listings}
 \usepackage{chemfig}
+\usepackage[normalem]{ulem}
 
 \usetikzlibrary{shapes, arrows, shadows, calc, positioning, fit}
 \usetikzlibrary{decorations.pathreplacing, decorations.pathmorphing, shapes.misc}
@@ -992,6 +993,9 @@
             and use that to backtrack further.
 
         \item But then we throw that information away\ldots
+
+        \item CNF encodings for graph problems tend to be annoyingly big, and lose structural
+            information.
     \end{itemize}
 
 \end{frame}
@@ -1005,11 +1009,21 @@
             \ldots), plus some \textbf{other constraints}.
 
         \item Can we make these problems easier to specify in a
-            \textbf{high-level constraint modelling language} like Essence' or
+            \textbf{high-level constraint modelling language} like \sout{Essence'}
             MiniZinc?
 
-        \item Can we combine dedicated graph algorithms with CP, MIP or SAT
-            solvers?
+        \item There is a continuum of what we could do with these models:
+
+            \begin{itemize}
+
+                \item Compile to CP, MIP or SAT (but these models tend to be large, and lose
+                    structural and heuristic information).
+                \item A hybrid, multi-solver approach, ``graph morphisms modulo theories'' style
+                    (but we need better theories).
+                \item Compile to subgraph isomorphism (but even simple arithmetic constraints become
+                    disgusting under reduction).
+
+            \end{itemize}
     \end{itemize}
 
 \end{frame}
